@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+	  <groupId>com.tasktop.codejam</groupId>
+	  <artifactId>visualcodereview</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>com.tasktop.codejam</groupId>
+  <artifactId>visualcodereview-docker</artifactId>
+  <name>Visual Code Review :: Docker</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.tasktop.codejam</groupId>
+      <artifactId>visualcodereview-gerrit-plugin</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+			      <groupId>com.tasktop.codejam</groupId>
+			      <artifactId>visualcodereview-gerrit-plugin</artifactId>
+			      <version>${project.version}</version>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>volumes/plugins</outputDirectory>
+                  <destFileName>visualcodereview-gerrit-plugin.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
