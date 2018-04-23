@@ -7,7 +7,6 @@
 	  <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.tasktop.codejam</groupId>
   <artifactId>visualcodereview-gerrit-plugin</artifactId>
   <name>Visual Code Review :: Gerrit Plug-in</name>
 
