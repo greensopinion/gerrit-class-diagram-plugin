@@ -13,7 +13,7 @@
   <properties>
     <Gerrit-ApiType>plugin</Gerrit-ApiType>
     <Gerrit-ApiVersion>2.15</Gerrit-ApiVersion>
-    <GWT-Version>2.8.0</GWT-Version>
+    <GWT-Version>2.8.2</GWT-Version>
   </properties>
 
   <build>
@@ -53,6 +53,24 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>${GWT-Version}</version>
+        <configuration>
+          <module>com.tasktop.codejam.visualcodereview.gerrit.ChangeDiagramUiPlugin</module>
+          <disableClassMetadata>true</disableClassMetadata>
+          <disableCastChecking>true</disableCastChecking>
+          <webappDirectory>${project.build.directory}/classes/static</webappDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
 
   </build>
@@ -74,6 +92,19 @@
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
       <version>${GWT-Version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.jsinterop</groupId>
+      <artifactId>jsinterop-annotations</artifactId>
+      <version>1.0.2</version>
+      <classifier>sources</classifier>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.jsinterop</groupId>
+      <artifactId>jsinterop-annotations</artifactId>
+      <version>1.0.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

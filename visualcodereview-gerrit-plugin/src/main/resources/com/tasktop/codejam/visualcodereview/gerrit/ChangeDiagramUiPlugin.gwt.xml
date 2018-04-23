@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="change_diagram_plugin">
+  <!--  inherits name="com.google.gwt.user.User"/ -->
+  <inherits name="com.google.gerrit.Plugin"/>
+  <!-- inherits name="com.google.gwt.http.HTTP"/ -->
+  <entry-point class="com.tasktop.codejam.visualcodereview.gerrit.client.DiagramPlugin"/>
+</module>
