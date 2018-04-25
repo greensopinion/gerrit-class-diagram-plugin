@@ -28,6 +28,8 @@ import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.gerrit.server.permissions.PermissionBackendException;
 import com.google.gerrit.server.permissions.ProjectPermission;
 import com.google.gerrit.server.project.ProjectCache;
+import com.tasktop.codejam.visualcodereview.gerrit.diagram.DotClient;
+import com.tasktop.codejam.visualcodereview.gerrit.diagram.DotGenerator;
 
 public class ClassDiagramServlet extends HttpServlet {
 
@@ -87,7 +89,8 @@ public class ClassDiagramServlet extends HttpServlet {
 			throws IOException {
 		Project.NameKey nameKey = new Project.NameKey(projectName);
 		try (Repository repository = repoManager.openRepository(nameKey)) {
-			String content = new DotClient().retrieveSvg(new DotGenerator().generate());
+			String content = new DotClient()
+					.retrieveSvg(new DotGenerator().generate(repository, projectName, commitHash));
 			response.setContentType("image/svg+xml;charset=utf-8");
 			response.setStatus(HttpServletResponse.SC_OK);
 			try (OutputStream output = response.getOutputStream()) {
@@ -125,7 +128,7 @@ public class ClassDiagramServlet extends HttpServlet {
 		String uri = request.getRequestURI();
 		int lastIndex = uri.lastIndexOf('/');
 		if (lastIndex != -1) {
-			return Optional.of(uri.substring(lastIndex));
+			return Optional.of(uri.substring(lastIndex + 1));
 		}
 		return Optional.empty();
 	}

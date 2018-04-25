@@ -29,7 +29,6 @@ public class DiagramChangeScreenExtension extends VerticalPanel {
 
 		Image image = new Image(
 				"/plugins/tasktop-visual-code-review/class-diagram/" + projectName + "/" + revision + ".svg");
-		image.setWidth("400px");
 		group.add(image);
 
 		panel.add(group);

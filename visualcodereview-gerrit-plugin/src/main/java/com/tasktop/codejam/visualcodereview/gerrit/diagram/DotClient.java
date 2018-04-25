@@ -1,4 +1,4 @@
-package com.tasktop.codejam.visualcodereview.gerrit;
+package com.tasktop.codejam.visualcodereview.gerrit.diagram;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
