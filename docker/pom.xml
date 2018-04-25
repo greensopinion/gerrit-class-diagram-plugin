@@ -38,6 +38,7 @@
 			      <groupId>com.tasktop.codejam</groupId>
 			      <artifactId>visualcodereview-gerrit-plugin</artifactId>
 			      <version>${project.version}</version>
+			      <classifier>complete</classifier>
                   <overWrite>true</overWrite>
                   <outputDirectory>volumes/plugins</outputDirectory>
                   <destFileName>visualcodereview-gerrit-plugin.jar</destFileName>
