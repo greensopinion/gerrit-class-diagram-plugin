@@ -3,6 +3,7 @@ package com.tasktop.codejam.visualcodereview.gerrit.client;
 import com.google.gerrit.client.GerritUiExtensionPoint;
 import com.google.gerrit.client.info.ChangeInfo;
 import com.google.gerrit.plugin.client.extension.Panel;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -27,9 +28,17 @@ public class DiagramChangeScreenExtension extends VerticalPanel {
 
 		group.add(new Label("Diagram:"));
 
-		Image image = new Image(
-				"/plugins/tasktop-visual-code-review/class-diagram/" + projectName + "/" + revision + ".svg");
-		group.add(image);
+		String imageUri = "/plugins/tasktop-visual-code-review/class-diagram/" + projectName + "/" + revision + ".svg";
+
+		Anchor hyperlink = new Anchor();
+		hyperlink.setTarget("_blank");
+		hyperlink.setHref(imageUri);
+
+		Image image = new Image(imageUri);
+		image.getElement().setAttribute("style", "max-width: 1024px");
+		hyperlink.getElement().appendChild(image.getElement());
+
+		group.add(hyperlink);
 
 		panel.add(group);
 	}

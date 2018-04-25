@@ -1,11 +1,13 @@
 package com.tasktop.codejam.visualcodereview.gerrit.model;
 
 import static java.text.MessageFormat.format;
+import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -48,9 +50,16 @@ public class ProgramModelService {
 	public ProgramModel create(CommitModel commitModel) {
 		List<TypeModel> types = new ArrayList<>();
 		List<Relationship> relationships = new ArrayList<>();
-		commitModel.getFiles().stream().filter(f -> f.getPath().endsWith(".java"))
-				.forEach(file -> parse(file, types, relationships));
-		return new ProgramModel(types, relationships);
+		commitModel.getFiles().stream().filter(includedFiles()).forEach(file -> parse(file, types, relationships));
+		return new ProgramModel(types, relationships.stream().filter(excludedRelationshipTypes()).collect(toList()));
+	}
+
+	private Predicate<FileModel> includedFiles() {
+		return f -> f.getPath().endsWith(".java") && !f.getPath().contains("src/test/");
+	}
+
+	private Predicate<Relationship> excludedRelationshipTypes() {
+		return r -> !r.getTargetFullyQualifiedName().startsWith("java.");
 	}
 
 	private void parse(FileModel file, List<TypeModel> types, List<Relationship> relationships) {
@@ -122,7 +131,12 @@ public class ProgramModelService {
 				return packageNameOfFullyQualifiedName(i.getNameAsString());
 			}
 		}
-		return packageName(cu);
+		try {
+			Class.forName("java.lang." + name.toString(), false, String.class.getClassLoader());
+			return "java.lang";
+		} catch (ClassNotFoundException e) {
+			return packageName(cu);
+		}
 	}
 
 	private String packageNameOfFullyQualifiedName(String fullyQualifiedName) {
