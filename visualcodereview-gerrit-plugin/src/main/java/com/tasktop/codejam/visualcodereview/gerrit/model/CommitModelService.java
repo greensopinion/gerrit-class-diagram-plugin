@@ -52,7 +52,7 @@ public class CommitModelService {
 		if (DiffEntry.ChangeType.DELETE.equals(entry.getChangeType())) {
 			return Optional.empty();
 		}
-		return Optional.of(new FileModel(entry.getNewPath()));
+		return Optional.of(new FileModel(entry.getNewId(), entry.getNewPath()));
 	}
 
 	private AbstractTreeIterator createTreeIterator(ObjectId treeId) throws IncorrectObjectTypeException, IOException {

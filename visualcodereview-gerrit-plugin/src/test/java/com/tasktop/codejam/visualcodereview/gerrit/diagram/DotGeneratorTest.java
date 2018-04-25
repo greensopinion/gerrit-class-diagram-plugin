@@ -17,11 +17,17 @@ public class DotGeneratorTest extends AbstractRepositoryTest {
 	@Test
 	public void generate() throws IOException {
 		String dot = generator.generate(repository, "ced86368a80bf33aecb467a3a3034a5e796ddd21");
-		assertThat(dot).isEqualTo(expectedDot());
+		assertThat(dot).isEqualTo(expectedDot("expected.dot"));
 	}
 
-	private String expectedDot() throws IOException {
-		return Resources.toString(DotGeneratorTest.class.getResource("expected.dot"), StandardCharsets.UTF_8);
+	@Test
+	public void generateWithRelationships() throws IOException {
+		String dot = generator.generate(repository, "da1a2de8754fbe05a88e329ff867f3f2f04bbca4");
+		assertThat(dot).isEqualTo(expectedDot("expected-with-relationships.dot"));
+	}
+
+	private String expectedDot(String name) throws IOException {
+		return Resources.toString(DotGeneratorTest.class.getResource(name), StandardCharsets.UTF_8);
 	}
 
 }

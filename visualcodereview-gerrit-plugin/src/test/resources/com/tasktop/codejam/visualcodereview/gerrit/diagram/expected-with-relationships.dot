@@ -1,0 +1,11 @@
+digraph G {
+	edge [ arrowhead=none color=dimgray dir=both];
+	node [ shape=record];
+	"com.tasktop.example.codereview.relationships.One"  [label="{One|}"];
+	"com.tasktop.example.codereview.relationships.Parent"  [label="{Parent|}"];
+	"com.tasktop.example.codereview.relationships.Three"  [label="{Three|}"];
+	"com.tasktop.example.codereview.relationships.Two"  [label="{Two|}"];
+	"com.tasktop.example.codereview.relationships.One" -> "com.tasktop.example.codereview.relationships.Parent" [arrowhead=onormal dir=forward]
+	"com.tasktop.example.codereview.relationships.One" -> "com.tasktop.example.codereview.relationships.Two" [arrowtail=odiamond dir=both]
+	"com.tasktop.example.codereview.relationships.One" -> "com.tasktop.example.codereview.relationships.Three" [arrowtail=odiamond dir=both headlabel="0..n"]
+}

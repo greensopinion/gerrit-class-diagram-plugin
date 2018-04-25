@@ -6,6 +6,8 @@ import static java.text.MessageFormat.format;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import com.tasktop.codejam.visualcodereview.gerrit.model.CardinalityType;
+import com.tasktop.codejam.visualcodereview.gerrit.model.Relationship;
 import com.tasktop.codejam.visualcodereview.gerrit.model.TypeModel;
 
 public class UmlStaticClassDiagramBuilder {
@@ -23,6 +25,25 @@ public class UmlStaticClassDiagramBuilder {
 
 	public void node(TypeModel type) {
 		writer.println(format("\t\"{0}\"  [label=\"'{'{1}|'}'\"];", type.getFullyQualifiedName(), type.getName()));
+	}
+
+	public void relationship(Relationship relationship) {
+		switch (relationship.getType()) {
+		case COMPOSITION:
+			if (relationship.getCardinality() == CardinalityType.NARY) {
+				writer.println(format("\t\"{0}\" -> \"{1}\" [arrowtail=odiamond dir=both headlabel=\"0..n\"]",
+						relationship.getSourceFullyQualifiedName(), relationship.getTargetFullyQualifiedName()));
+
+			} else {
+				writer.println(format("\t\"{0}\" -> \"{1}\" [arrowtail=odiamond dir=both]",
+						relationship.getSourceFullyQualifiedName(), relationship.getTargetFullyQualifiedName()));
+			}
+			break;
+		case EXTENSION:
+			writer.println(format("\t\"{0}\" -> \"{1}\" [arrowhead=onormal dir=forward]",
+					relationship.getSourceFullyQualifiedName(), relationship.getTargetFullyQualifiedName()));
+			break;
+		}
 	}
 
 	public void endDiagram() {

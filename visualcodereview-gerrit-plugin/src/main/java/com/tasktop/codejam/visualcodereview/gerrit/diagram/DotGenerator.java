@@ -19,7 +19,8 @@ public class DotGenerator {
 		StringWriter writer = new StringWriter();
 		UmlStaticClassDiagramBuilder builder = new UmlStaticClassDiagramBuilder(writer);
 		builder.beginDiagram();
-		programModel.getTypes().forEach(type -> builder.node(type));
+		programModel.getTypes().forEach(builder::node);
+		programModel.getRelationships().forEach(builder::relationship);
 		builder.endDiagram();
 		return writer.toString();
 	}
