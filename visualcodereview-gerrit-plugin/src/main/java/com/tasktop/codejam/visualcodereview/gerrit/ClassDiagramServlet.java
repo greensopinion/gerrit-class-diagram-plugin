@@ -89,8 +89,7 @@ public class ClassDiagramServlet extends HttpServlet {
 			throws IOException {
 		Project.NameKey nameKey = new Project.NameKey(projectName);
 		try (Repository repository = repoManager.openRepository(nameKey)) {
-			String content = new DotClient()
-					.retrieveSvg(new DotGenerator().generate(repository, projectName, commitHash));
+			String content = new DotClient().retrieveSvg(new DotGenerator().generate(repository, commitHash));
 			response.setContentType("image/svg+xml;charset=utf-8");
 			response.setStatus(HttpServletResponse.SC_OK);
 			try (OutputStream output = response.getOutputStream()) {

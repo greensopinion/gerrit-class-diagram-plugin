@@ -1,0 +1,5 @@
+digraph G {
+	edge [ arrowhead=none color=dimgray dir=both];
+	node [ shape=record];
+	"unknown.Example"  [label="{Example|}"];
+}

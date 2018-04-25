@@ -1,5 +1,7 @@
 package com.tasktop.codejam.visualcodereview.gerrit.model;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class CommitModelService {
 	private Repository repository;
 
 	public CommitModelService(Repository repository) {
-		this.repository = repository;
+		this.repository = checkNotNull(repository);
 	}
 
 	public CommitModel create(String commitId) throws IOException {
