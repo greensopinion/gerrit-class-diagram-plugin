@@ -22,6 +22,7 @@ import com.github.javaparser.ParserConfiguration.LanguageLevel;
 import com.github.javaparser.StringProvider;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
@@ -55,7 +56,11 @@ public class ProgramModelService {
 	}
 
 	private Predicate<FileModel> includedFiles() {
-		return f -> f.getPath().endsWith(".java") && !f.getPath().contains("src/test/");
+		return f -> f.getPath().endsWith(".java") && !isTest(f);
+	}
+
+	private boolean isTest(FileModel f) {
+		return f.getPath().contains("src/test/") || f.getPath().contains(".tests/src/");
 	}
 
 	private Predicate<Relationship> excludedRelationshipTypes() {
@@ -89,11 +94,8 @@ public class ProgramModelService {
 
 		if (type instanceof ClassOrInterfaceDeclaration) {
 			ClassOrInterfaceDeclaration declaration = (ClassOrInterfaceDeclaration) type;
-			for (ClassOrInterfaceType extendedType : declaration.getExtendedTypes()) {
-				String qualifiedName = qualifiedName(cu, extendedType);
-				builder.add(new Relationship(RelationshipType.EXTENSION, CardinalityType.UNARY, qualifiedName(cu, type),
-						qualifiedName));
-			}
+			addAll(builder, cu, type, declaration.getExtendedTypes());
+			addAll(builder, cu, type, declaration.getImplementedTypes());
 		}
 		for (FieldDeclaration declaration : type.getFields()) {
 			Type commonType = declaration.getCommonType();
@@ -115,6 +117,15 @@ public class ProgramModelService {
 			}
 		}
 		return builder.build();
+	}
+
+	private void addAll(Builder<Relationship> builder, CompilationUnit cu, TypeDeclaration<?> type,
+			NodeList<ClassOrInterfaceType> extendedTypes) {
+		for (ClassOrInterfaceType extendedType : extendedTypes) {
+			String qualifiedName = qualifiedName(cu, extendedType);
+			builder.add(new Relationship(RelationshipType.EXTENSION, CardinalityType.UNARY, qualifiedName(cu, type),
+					qualifiedName));
+		}
 	}
 
 	private String qualifiedName(CompilationUnit cu, ClassOrInterfaceType type) {
