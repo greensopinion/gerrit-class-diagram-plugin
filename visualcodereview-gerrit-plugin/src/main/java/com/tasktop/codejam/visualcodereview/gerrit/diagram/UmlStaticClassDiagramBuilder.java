@@ -2,11 +2,14 @@ package com.tasktop.codejam.visualcodereview.gerrit.diagram;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.text.MessageFormat.format;
+import static java.util.stream.Collectors.toSet;
 
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Set;
 
 import com.tasktop.codejam.visualcodereview.gerrit.model.CardinalityType;
+import com.tasktop.codejam.visualcodereview.gerrit.model.ProgramModel;
 import com.tasktop.codejam.visualcodereview.gerrit.model.Relationship;
 import com.tasktop.codejam.visualcodereview.gerrit.model.TypeModel;
 
@@ -21,6 +24,25 @@ public class UmlStaticClassDiagramBuilder {
 	public void beginDiagram() {
 		writer.println("digraph G {");
 		generateDefaultSettings();
+	}
+
+	public void model(ProgramModel programModel) {
+
+		programModel.getTypes().forEach(this::node);
+
+		Set<String> typeNames = programModel.getTypes().stream().map(TypeModel::getFullyQualifiedName).collect(toSet());
+		programModel.getRelationships().stream().map(Relationship::getTargetFullyQualifiedName)
+				.filter(t -> !typeNames.contains(t)).forEach(this::addType);
+
+		programModel.getRelationships().forEach(this::relationship);
+	}
+
+	private void addType(String fullyQualifiedName) {
+		String simpleName = fullyQualifiedName;
+		if (simpleName.lastIndexOf('.') != -1) {
+			simpleName = simpleName.substring(simpleName.lastIndexOf('.') + 1);
+		}
+		writer.println(format("\t\"{0}\"  [label=\"'{'{1}|'}'\" color=gray];", fullyQualifiedName, simpleName));
 	}
 
 	public void node(TypeModel type) {
