@@ -14,6 +14,7 @@ services:
      - ${PWD}/volumes/cache:/var/gerrit/cache
      - ${PWD}/volumes/plugins:/var/gerrit/plugins
 #    entrypoint: java -jar /var/gerrit/bin/gerrit.war init -d /var/gerrit
+#    entrypoint: java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
   dot:
     image: "omerio/graphviz-server"
     ports:
