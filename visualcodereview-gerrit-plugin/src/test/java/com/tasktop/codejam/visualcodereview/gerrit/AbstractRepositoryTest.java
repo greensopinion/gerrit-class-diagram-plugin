@@ -30,7 +30,7 @@ public class AbstractRepositoryTest {
 
 	@Before
 	public void before() throws IOException {
-		git = Git.open(new File("../docker/volumes/git/com.tasktop.example.codereview.git"));
+		git = Git.open(new File("target/com.tasktop.example.codereview.git"));
 		repository = git.getRepository();
 	}
 

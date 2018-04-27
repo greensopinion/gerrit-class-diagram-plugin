@@ -20,6 +20,25 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>process-test-resources</phase>
+						<configuration>
+							<tasks>
+								<unzip
+									src="${project.basedir}/src/test/resources/com.tasktop.example.codereview.git.zip"
+									dest="${project.build.directory}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
@@ -94,7 +113,8 @@
 										<Implementation-Vendor>Tasktop</Implementation-Vendor>
 										<Implementation-URL>https://tasktop.com</Implementation-URL>
 
-										<Implementation-Title>Tasktop Visual Code Review Gerrit Plug-in</Implementation-Title>
+										<Implementation-Title>Tasktop Visual Code Review Gerrit
+											Plug-in</Implementation-Title>
 										<Implementation-Version>${project.version}</Implementation-Version>
 
 										<Gerrit-ApiType>${Gerrit-ApiType}</Gerrit-ApiType>
@@ -160,7 +180,6 @@
 			<artifactId>java-symbol-solver-core</artifactId>
 			<version>0.6.3</version>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
