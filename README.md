@@ -14,7 +14,7 @@ Example
 =======
 
 
-<a href="https://raw.githubusercontent.com/greensopinion/gerrit-class-diagram-plugin/doc/example.png" target="_blank"><img src="https://raw.githubusercontent.com/greensopinion/gerrit-class-diagram-plugin/doc/example.png" style="max-width: 600px"/></a>
+<a href="https://raw.githubusercontent.com/greensopinion/gerrit-class-diagram-plugin/master/doc/example.png" target="_blank"><img src="https://raw.githubusercontent.com/greensopinion/gerrit-class-diagram-plugin/master/doc/example.png" style="max-width: 600px"/></a>
 
 Classes included in the Git commit are shown in black, while related types that are not changed in the commit are shown in dark gray.
 
