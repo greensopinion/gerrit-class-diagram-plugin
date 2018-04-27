@@ -5,6 +5,8 @@ This project provides a plug-in for [Gerrit](https://www.gerritcodereview.com/) 
 
 This is an experiment to see if generated diagrams could be useful.  The goal is to surface abstractions and bring in context that's not available in a file- and line-based code review system.
 
+You can read [more about the experiment here](http://greensopinion.com/2018/04/27/surfacing-abstractions-in-code-reviews.html).
+
 Status
 ======
 
